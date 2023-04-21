@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task Manager</title>
+  </head>
+  <body>
+    <h1>Task Manager</h1>
+    <ul>
+      <% tasks.forEach(function(task) { %>
+        <li><a href="/tasks/<%= task._id %>"><%= task.title %></a></li>
+      <% }); %>
+    </ul>
+    <a href="/tasks/create">Create a New Task</a>
+  </body>
+</html>

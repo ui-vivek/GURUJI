@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= task.title %></title>
+  </head>
+  <body>
+    <h1><%= task.title %></h1>
+    <p><%= task.description %></p>
+    <a href="/tasks/<%= task._id %>/edit">Edit Task</a>
+    <form method="POST" action="/tasks/<%= task._id %>?_method=DELETE">
+      <button type="submit">Delete Task</button>
+    </form>
+  </body>
+</html>
