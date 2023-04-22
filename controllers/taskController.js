@@ -29,6 +29,19 @@ exports.postCreateTask = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+exports.getTaskById = async (req, res) => {
+  try {
+    const task = await Task.findOne({ _id: req.params.id, user: req.user._id });
+    if (!task) {
+      return res.status(404).send('Task not found');
+    }
+    res.render('tasks/details', { task });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
+
 
 exports.getEditTask = async (req, res) => {
   try {
