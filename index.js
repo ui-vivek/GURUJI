@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const flash = require("connect-flash");
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
@@ -10,11 +11,14 @@ dotenv.config();
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true // updated option
-});
+mongoose.connect(process.env.MONGODB_URI,
+  err => {
+      if(err) throw err;
+      console.log('connected to MongoDB')
+  });
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // Middleware
 app.use(express.json());
@@ -27,6 +31,12 @@ app.use(
   })
 );
 app.use(flash());
+
+// Middleware for JWT authentication
+const auth = require('./middleware/auth');
+app.use(auth);
+
+
 
 // Routes
 const taskRoutes = require("./routes/taskRoutes");
